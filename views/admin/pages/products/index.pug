@@ -12,35 +12,27 @@ block main
                 th Trạng thái               
                 th Hành động
         tbody
-            tr
-                td 1
-                td 
-                    img(src="https://cdn.dummyjson.com/products/images/beauty/Essence%20Mascara%20Lash%20Princess/thumbnail.png" 
-                    alt="sản phẩm" 
-                    width="100px" 
-                    height="auto")
-                td Sản phẩm 1
-                td 100,000₫
-                td 
-                    a(href="#" class="badge bg-success") Hoạt động
+            each item,index in products
+                tr
+                    td #{index+1}
+                    td 
+                        img(
+                        src=item.thumbnail
+                        alt=item.title
+                        width="100px" 
+                        height="auto")
+                    td #{item.title}
+                    td #{item.price}$
+                    td 
+                        if(item.status == "active") 
+                            a(href="#" class="badge bg-success") Hoạt động
+                        else
+                             a(href="#" class="badge bg-danger") Dừng hoạt động
+                        
 
-                td 
-                    button.btn.btn-primary.me-2 Xem chi tiết
-                    button.btn.btn-warning.me-2 Chỉnh sửa
-                    button.btn.btn-danger Xóa
+                    td 
+                        button.btn.btn-primary.me-2 Xem chi tiết
+                        button.btn.btn-warning.me-2 Chỉnh sửa
+                        button.btn.btn-danger Xóa
 
-            tr
-                td 2
-                td 
-                    img(src="https://cdn.dummyjson.com/products/images/beauty/Essence%20Mascara%20Lash%20Princess/thumbnail.png" 
-                    alt="sản phẩm" 
-                    width="100px" 
-                    height="auto")
-                td Sản phẩm 2
-                td 200,000₫
-                td 
-                    a(href="#" class="badge bg-danger") Không hoạt động
-                td 
-                    button.btn.btn-primary Xem chi tiết
-                    button.btn.btn-warning Chỉnh sửa
-                    button.btn.btn-danger Xóa
+            
