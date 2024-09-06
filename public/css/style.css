@@ -32,7 +32,6 @@ html, body {
   
 }
 
-
 .box-head {
   margin-bottom: 1.5rem;
 }
@@ -43,16 +42,7 @@ html, body {
   color: green;
 }
 
-.product-item {
-  background-color: #f8f9fa;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  padding: 1rem;
-  text-align: center;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.product-item:hover {
+.inner-image img:hover {
   transform: translateY(-5px);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
@@ -78,6 +68,9 @@ html, body {
   margin-bottom: 0.5rem;
   color: #333;
   font-weight: bold;
+  white-space: nowrap; /* Không cho phép xuống dòng */
+  overflow: hidden; /* Ẩn phần vượt quá giới hạn chiều rộng */
+  text-overflow: ellipsis; /* Thêm dấu "..." khi nội dung bị cắt */
 }
 .inner-price-new {
   font-size: 1.5rem;
