@@ -1,0 +1,107 @@
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+
+.header {
+  border-bottom: 1px solid #ddd;
+  padding: 10px 0;
+}
+.header .inner-logo img {
+  max-height: 50px;
+  max-width: 100px
+}
+.header .inner-menu > ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+}
+.header .inner-menu > ul > li {
+  margin-left: 20px;
+}
+.header .inner-menu > ul > li a{
+  text-decoration: none;
+  
+}
+
+
+.box-head {
+  margin-bottom: 1.5rem;
+}
+
+.inner-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: green;
+}
+
+.product-item {
+  background-color: #f8f9fa;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 1rem;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.product-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.inner-image img {
+  max-width: 100%;
+  height: auto;
+  border-bottom: 1px solid #ddd;
+  margin-bottom: 1rem;
+  transition: transform 0.3s ease;
+}
+
+.product-item:hover .inner-image img {
+  transform: scale(1.05);
+}
+
+.inner-content {
+  padding: 1rem 0;
+}
+
+.inner-content .inner-title {
+  font-size: 1.25rem;
+  margin-bottom: 0.5rem;
+  color: #333;
+  font-weight: bold;
+}
+.inner-price-new {
+  font-size: 1.5rem;
+  color: #28a745;
+  font-weight: bold;
+}
+
+.inner-price-old {
+  font-size: 1rem;
+  color: #6c757d;
+  text-decoration: line-through;
+  margin-bottom: 0.5rem;
+}
+
+.inner-discountPercentage {
+  font-size: 1.2rem;
+  color: #dc3545;
+}
+
+
+.footer{
+  background: #333;
+  color: #ddd;
+  text-align: center;
+  padding: 10px;
+  margin-top: auto; /* Push footer to the bottom */
+}
