@@ -29,3 +29,26 @@ if (buttonStatus.length > 0) {
     });
   });
 }
+//Nếu không xử lý bên dưới thì khi không nhập gì nó sẽ hiện ra cái này:
+// http://localhost:3000/admin/products?keyword=
+
+// Xử lý cái này để có thể xoá đc cái keyword trên thanh url khi không nhập gì
+
+ const formSeach = document.querySelector("#form-search");
+ console.log(formSeach)
+ if(formSeach){
+    let url = new URL( window.location.href);
+    formSeach.addEventListener("submit", (e) =>{
+        e.preventDefault();
+        console.log(e.target.elements.keyword.value)
+        const keyword = e.target.elements.keyword.value;
+        if(keyword){
+            url.searchParams.set("keyword", keyword)
+        }else{
+            url.searchParams.delete("keyword")
+          }
+          window.location.href = url.href
+    })
+
+
+ }

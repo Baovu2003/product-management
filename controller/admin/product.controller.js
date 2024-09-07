@@ -48,9 +48,10 @@ module.exports.index = async (req, res) => {
   if (req.query.keyword) {
     keyword = req.query.keyword;
    
-    const regex = new RegExp(keyword, "i");
      //      keyword: là từ khóa tìm kiếm mà người dùng nhập.
     // "i": flag ignore case, có nghĩa là không phân biệt chữ hoa chữ thường.
+    const regex = new RegExp(keyword, "i");
+    
     find.title = regex;
   }
 
