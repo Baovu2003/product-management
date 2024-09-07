@@ -24,13 +24,15 @@ module.exports.index = async (req, res) => {
   ];
 
   if (req.query.status) {
-    const index = filterStatus.findIndex(item => item.status == req.query.status);
+    const index = filterStatus.findIndex(
+      (item) => item.status == req.query.status
+    );
     console.log(index);
-    filterStatus[index].class="active"
-  }else{
-    const index = filterStatus.findIndex(item => item.status == "");
+    filterStatus[index].class = "active";
+  } else {
+    const index = filterStatus.findIndex((item) => item.status == "");
     console.log(index);
-    filterStatus[index].class="active"
+    filterStatus[index].class = "active";
   }
 
   let find = {
@@ -41,11 +43,23 @@ module.exports.index = async (req, res) => {
     find.status = req.query.status;
   }
 
+  let keyword = "";
+
+  if (req.query.keyword) {
+    keyword = req.query.keyword;
+   
+    const regex = new RegExp(keyword, "i");
+     //      keyword: là từ khóa tìm kiếm mà người dùng nhập.
+    // "i": flag ignore case, có nghĩa là không phân biệt chữ hoa chữ thường.
+    find.title = regex;
+  }
+
   const products = await Product.find(find);
   res.render("admin/pages/products/index.pug", {
     pageTitle: "Danh sách sản phẩm",
     products: products,
     filterStatus: filterStatus,
+    keyword: keyword,
   });
   // res.send("Trang sản phẩm")
 };
