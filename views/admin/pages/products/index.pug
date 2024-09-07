@@ -2,37 +2,53 @@ extends ../../layouts/default.pug
 
 block main
     h1 Trang danh sách sản phẩm
-    table.table.table-striped.table-bordered
-        thead
-            tr
-                th STT
-                th Hình ảnh
-                th Sản phẩm
-                th Giá
-                th Trạng thái               
-                th Hành động
-        tbody
-            each item,index in products
-                tr
-                    td #{index+1}
-                    td 
-                        img(
-                        src=item.thumbnail
-                        alt=item.title
-                        width="100px" 
-                        height="auto")
-                    td #{item.title}
-                    td #{item.price}$
-                    td 
-                        if(item.status == "active") 
-                            a(href="#" class="badge bg-success") Hoạt động
-                        else
-                             a(href="#" class="badge bg-danger") Dừng hoạt động
-                        
 
-                    td 
-                        button.btn.btn-primary.me-2 Xem chi tiết
-                        button.btn.btn-warning.me-2 Chỉnh sửa
-                        button.btn.btn-danger Xóa
+    .card.mb-3
+        .card-header Bộ lọc và tìm kiếm 
+            .card-body 
+                each item in filterStatus
+                    button(
+                        class=`btn btn-sm btn-outline-success me-2 ${item.class}`
+                        button-status=item.status
+                    ) #{item.name}
+                    
+
+
+    .card.mb-3
+        .card-header Danh sách
+            .card-body 
+                table.table.table-striped.table-bordered
+                    thead
+                        tr
+                            th STT
+                            th Hình ảnh
+                            th Sản phẩm
+                            th Giá
+                            th Trạng thái               
+                            th Hành động
+                    tbody
+                        each item,index in products
+                            tr
+                                td #{index+1}
+                                td 
+                                    img(
+                                    src=item.thumbnail
+                                    alt=item.title
+                                    width="100px" 
+                                    height="auto")
+                                td #{item.title}
+                                td #{item.price}$
+                                td 
+                                    if(item.status == "active") 
+                                        a(href="#" class="badge bg-success") Hoạt động
+                                    else
+                                        a(href="#" class="badge bg-danger") Dừng hoạt động
+                                    
+
+                                td 
+                                    button.btn.btn-primary.me-2 Detail
+                                    button.btn.btn-warning.me-2 Update
+                                    button.btn.btn-danger Xóa
+                
 
             
