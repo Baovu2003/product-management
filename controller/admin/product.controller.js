@@ -2,13 +2,12 @@
 
 const Product = require("../../models/product.model");
 const filterStatusHelper = require("../../helpers/filterStatus")
+const searchHelper = require("../../helpers/search")
 module.exports.index = async (req, res) => {
   console.log(req.query.status);
 
 
   // Đoạn bộ lọc
-
-
   const filterStatus = filterStatusHelper(req.query)
 
   let find = {
@@ -19,19 +18,16 @@ module.exports.index = async (req, res) => {
     find.status = req.query.status;
   }
 
+    // Đoạn search
 
-  // Đoạn search
+   // Sử dụng searchHelper để xử lý logic tìm kiếm
+  const objectSearch = searchHelper(req.query,find)
+  console.log("objectSearch:",objectSearch);
 
-  let keyword = "";
-
-  if (req.query.keyword) {
-    keyword = req.query.keyword;
-   
-     //      keyword: là từ khóa tìm kiếm mà người dùng nhập.
-    // "i": flag ignore case, có nghĩa là không phân biệt chữ hoa chữ thường.
-    const regex = new RegExp(keyword, "i");
+  // Nếu có regex từ objectSearch (tức là có từ khóa tìm kiếm)
+  if (objectSearch.regex) {
     
-    find.title = regex;
+    find.title = objectSearch.regex; // Thêm điều kiện tìm kiếm vào find
   }
 
   const products = await Product.find(find);
@@ -39,7 +35,6 @@ module.exports.index = async (req, res) => {
     pageTitle: "Danh sách sản phẩm",
     products: products,
     filterStatus: filterStatus,
-    keyword: keyword,
+    keyword: objectSearch.keyword,
   });
-  // res.send("Trang sản phẩm")
 };
