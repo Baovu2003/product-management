@@ -17,9 +17,10 @@ const port = process.env.PORT;
 app.set("views", "./views");
 app.set("view engine", "pug");
 
+
 // App Locals Variables:
 // =>>tạo ra các biến toàn cục để ở file pug nào cũng có thể sử dụng
-
+// Ví dụ: Đã đc thêm vào admin/partials/header.pug và  admin/partials/sider.pug
 app.locals.prefixAdmin = systemConfig.prefixAdmin
 
 

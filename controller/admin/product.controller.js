@@ -1,8 +1,10 @@
-// [GET]: /admin/products
+
 
 const Product = require("../../models/product.model");
 const filterStatusHelper = require("../../helpers/filterStatus")
 const searchHelper = require("../../helpers/search")
+
+// [GET]: /admin/products
 module.exports.index = async (req, res) => {
   console.log(req.query.status);
 
@@ -26,7 +28,7 @@ module.exports.index = async (req, res) => {
     find.title = objectSearch.regex; // Thêm điều kiện tìm kiếm vào find
   }
 
-  // PAGINATION
+  //------------------------ PAGINATION----------------------------------
 
     let objectPagination = {
       currentPage: 1,
@@ -50,7 +52,7 @@ module.exports.index = async (req, res) => {
     console.log("totalPage",totalPage)
     objectPagination.totalPage = totalPage
     
-  // End
+  // --------------------------End------------------------------
   const products = await Product.find(find).limit(4).skip(objectPagination.skip);
   res.render("admin/pages/products/index.pug", {
     pageTitle: "Danh sách sản phẩm",
@@ -60,3 +62,15 @@ module.exports.index = async (req, res) => {
     pagination: objectPagination,
   });
 };
+
+// --------------------------/admin/change-status/:status/:id-------------------------------------------
+module.exports.changeStatus = async (req,res) =>{
+
+  res.send("OKKKKKK")
+  
+  const status = req.params.status
+  const id = req.params.id
+  console.log({status, id})
+
+
+}
