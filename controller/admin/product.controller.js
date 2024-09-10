@@ -66,11 +66,13 @@ module.exports.index = async (req, res) => {
 // --------------------------/admin/change-status/:status/:id-------------------------------------------
 module.exports.changeStatus = async (req,res) =>{
 
-  res.send("OKKKKKK")
-  
   const status = req.params.status
   const id = req.params.id
   console.log({status, id})
+  await Product.updateOne({ _id: id }, { status:status });
 
-
+  // dùng back sẽ chuyển hướng yêu cầu trở lại ngay trang trước
+  // Vì vậy nếu đang ở trang 2 thì nếu update status nó vẫn ở nguyên trang đó kaka
+  res.redirect('back')
+  // res.redirect('/admin/products')
 }

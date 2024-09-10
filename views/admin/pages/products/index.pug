@@ -45,11 +45,17 @@ block main
                                 td 
                                     if(item.status == "active") 
                                         a(
-                                            href="#"
+                                            href="javascript:;" 
+                                            data-status = item.status
+                                            data-id = item.id
+                                            button-change-status
                                             class="badge bg-success") Hoạt động
                                     else
                                         a(
-                                            href="#" 
+                                            href="javascript:;" 
+                                            data-status = item.status
+                                            data-id = item.id
+                                            button-change-status
                                             class="badge bg-danger") Dừng hoạt động
                                     
 
@@ -58,5 +64,17 @@ block main
                                     button.btn.btn-warning.me-2 Update
                                     button.btn.btn-danger Xóa
     //- Mixin pagintion
-    +pagination(pagination)                          
-     
+    +pagination(pagination)        
+    form(
+        action="",
+        method="POST"
+        data-path=`${prefixAdmin}/products/change-status`
+        id="form-change-status"
+        ) 
+
+
+
+    script(src="/admin/js/product.js")
+
+    
+    
