@@ -21,9 +21,32 @@ block main
     .card.mb-3
         .card-header Danh sách
             .card-body 
-                table.table.table-striped.table-bordered
+                form(
+                    action=`${prefixAdmin}/products/change-multi?_method=PATCH`,
+                    method="POST"                 
+                    form-change-multi
+                    ) 
+                     .d-flex.align-items-start 
+                            .form-group     
+                                select(name="type" class="form-select")
+                                    option(value="active") Hoạt động
+                                    option(value="inactive") Dừng hoạt động
+                            .form-group   
+                                input(
+                                    type="text"
+                                    name="ids"
+                                    value=""
+                                    class="form-control d-none"
+                    )
+                            button(type="submit" class="btn btn-primary") Apply                
+                table(
+                   class=" table table-striped table-bordered"
+                   checkbox-multi
+                )
                     thead
                         tr
+                            th 
+                                input(type="checkbox" name="checkall")
                             th STT
                             th Hình ảnh
                             th Sản phẩm
@@ -32,7 +55,9 @@ block main
                             th Hành động
                     tbody
                         each item,index in products
-                            tr
+                            tr  
+                                td 
+                                    input(type="checkbox" name="id" value= item.id)
                                 td #{index+1}
                                 td 
                                     img(

@@ -63,3 +63,78 @@ buttonPagination.forEach((button) => {
     window.location.href = url.href;
   });
 });
+
+// ---------Phần ô input để có thể chọn nhiều sản phẩm và apply status----------------------------------------------
+const checkboxMulti = document.querySelector("[checkbox-multi]");
+console.log("checkboxMulti", checkboxMulti);
+if (checkboxMulti) {
+  const inputCheckAll = document.querySelector("input[name ='checkall'] ");
+  console.log("inputCheckAll", inputCheckAll);
+  const inputCheckMulti = document.querySelectorAll("input[name ='id'] ");
+  console.log("inputCheckMulti", inputCheckMulti);
+
+  inputCheckAll.addEventListener("click", () => {
+    console.log("inputCheckAll.checked", inputCheckAll.checked);
+    if (inputCheckAll.checked) {
+      inputCheckMulti.forEach((item) => {
+        item.checked = true;
+      });
+    } else {
+      inputCheckMulti.forEach((item) => {
+        item.checked = false;
+      });
+    }
+  });
+
+  inputCheckMulti.forEach((item) => {
+    item.addEventListener("click", () => {
+      const countChecked = checkboxMulti.querySelectorAll(
+        "input[name ='id']:checked"
+      ).length;
+      console.log("countChecked: ", countChecked);
+
+      const countCheckMulti = inputCheckMulti.length;
+      console.log("countCheckMulti: ", countCheckMulti);
+
+      if (countChecked == countCheckMulti) {
+        inputCheckAll.checked = true;
+      } else {
+        inputCheckAll.checked = false;
+      }
+    });
+  });
+}
+// -------------End check multi------------------------
+
+// ---------------FORM change multi-----------------
+
+const formChangeMulti = document.querySelector("[form-change-multi]");
+if (formChangeMulti) {
+  formChangeMulti.addEventListener("submit", (e) => {
+    e.preventDefault();
+    console.log(e);
+    const checkboxMulti = document.querySelector("[checkbox-multi]");
+    const inputChecked = checkboxMulti.querySelectorAll(
+      "input[name ='id']:checked"
+    );
+    console.log("inputChecked", inputChecked);
+
+    const arrayId = [];
+    const inputIds = formChangeMulti.querySelector("input[name ='ids'] ")
+    console.log("inputIds",inputIds)
+    if (inputChecked.length > 0) {
+      inputChecked.forEach((item) => {
+        const id = item.value;
+        console.log("id", id);
+        arrayId.push(id);
+        console.log("arrayId:", arrayId);
+
+        inputIds.value = arrayId.join(", ")
+        formChangeMulti.submit();
+      });
+    } else {
+      alert("Please choose one");
+    }
+  });
+}
+// ---------------END FORM change multi-----------------

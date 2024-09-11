@@ -22,6 +22,53 @@
     top: 56px;
     left: 0;
 }
+/* Style for the sidebar container */
+.sider {
+    width: 250px; /* Set width for sidebar */
+    background-color: #343a40; /* Dark background color */
+    height: 100vh; /* Full height */
+    position: fixed; /* Fixed position on the screen */
+    left: 0; /* Stick to the left side */
+    top: 0; /* Stick to the top */
+    padding-top: 20px; /* Add some padding at the top */
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); /* Add shadow for depth */
+}
+
+.inner-menu {
+    padding: 10px; /* Add some padding to the inner menu */
+}
+
+.inner-menu ul {
+    list-style: none; /* Remove bullets from the list */
+    padding: 0; /* Remove default padding */
+}
+
+.inner-menu li {
+    margin-bottom: 15px; /* Add space between items */
+    border-bottom: 1px solid;
+}
+
+.inner-menu a {
+    display: block; /* Make the entire list item clickable */
+    padding: 10px 15px; /* Add padding for space inside the link */
+    color: white; /* White text color */
+    text-decoration: none; /* Remove underline from links */
+    font-size: 16px; /* Increase font size */
+    font-weight: 500; /* Slightly bold font */
+    border-radius: 4px; /* Slightly round the edges */
+    transition: background-color 0.3s; /* Smooth background color change on hover */
+}
+
+.inner-menu a:hover {
+    background-color: #495057; /* Darker background on hover */
+}
+
+/* Active link styling */
+.inner-menu a.active {
+    background-color: #007bff; /* Highlight the active link */
+    font-weight: bold; /* Bold text for active link */
+}
+
 .body .main{
     margin: 15px;
     position: relative;
