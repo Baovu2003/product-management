@@ -120,8 +120,8 @@ if (formChangeMulti) {
     console.log("inputChecked", inputChecked);
 
     const arrayId = [];
-    const inputIds = formChangeMulti.querySelector("input[name ='ids'] ")
-    console.log("inputIds",inputIds)
+    const inputIds = formChangeMulti.querySelector("input[name ='ids'] ");
+    console.log("inputIds", inputIds);
     if (inputChecked.length > 0) {
       inputChecked.forEach((item) => {
         const id = item.value;
@@ -129,7 +129,7 @@ if (formChangeMulti) {
         arrayId.push(id);
         console.log("arrayId:", arrayId);
 
-        inputIds.value = arrayId.join(", ")
+        inputIds.value = arrayId.join(", ");
         formChangeMulti.submit();
       });
     } else {
@@ -138,3 +138,26 @@ if (formChangeMulti) {
   });
 }
 // ---------------END FORM change multi-----------------
+
+// ----------------DELETE ITEM---------------------------
+const buttonDelete = document.querySelectorAll("[button-delete]");
+
+if (buttonDelete.length > 0) {
+  const formDelete = document.querySelector("#form-delete-item");
+  console.log("formDelete", formDelete);
+  const path = formDelete.getAttribute("data-path");
+  console.log("path", path);
+  buttonDelete.forEach((item) => {
+    item.addEventListener("click", () => {
+      const isConfirm = confirm("Are you want to delete");
+      if (isConfirm) {
+        const id = item.getAttribute("data-id");
+        console.log({ id });
+        const action =  `${path}/${id}?_method=DELETE`;
+        console.log("action", action);
+        formDelete.action = action;
+        formDelete.submit();
+      }
+    });
+  });
+}

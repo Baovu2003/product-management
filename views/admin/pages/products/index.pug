@@ -2,6 +2,7 @@ extends ../../layouts/default.pug
 include ../../mixins/filter-status.pug
 include ../../mixins/search.pug
 include ../../mixins/pagination.pug
+include ../../mixins/form-change-multi
 block main
     h1 Trang danh sách sản phẩm
 
@@ -21,24 +22,8 @@ block main
     .card.mb-3
         .card-header Danh sách
             .card-body 
-                form(
-                    action=`${prefixAdmin}/products/change-multi?_method=PATCH`,
-                    method="POST"                 
-                    form-change-multi
-                    ) 
-                     .d-flex.align-items-start 
-                            .form-group     
-                                select(name="type" class="form-select")
-                                    option(value="active") Hoạt động
-                                    option(value="inactive") Dừng hoạt động
-                            .form-group   
-                                input(
-                                    type="text"
-                                    name="ids"
-                                    value=""
-                                    class="form-control d-none"
-                    )
-                            button(type="submit" class="btn btn-primary") Apply                
+                //- Mixin form-change-multi
+                +form-change-multi (`${prefixAdmin}/products/change-multi?_method=PATCH`)               
                 table(
                    class=" table table-striped table-bordered"
                    checkbox-multi
@@ -51,6 +36,7 @@ block main
                             th Hình ảnh
                             th Sản phẩm
                             th Giá
+                            th Position
                             th Trạng thái               
                             th Hành động
                     tbody
@@ -67,6 +53,14 @@ block main
                                     height="auto")
                                 td #{item.title}
                                 td #{item.price}$
+                                td 
+                                  input(
+                                    type="number"
+                                    value=item.position
+                                    min="1"
+                                    style="width: 60px; border-radius: 5px;"
+                                    name="position"
+                                  )
                                 td 
                                     if(item.status == "active") 
                                         a(
@@ -87,16 +81,27 @@ block main
                                 td 
                                     button.btn.btn-primary.me-2 Detail
                                     button.btn.btn-warning.me-2 Update
-                                    button.btn.btn-danger Xóa
+                                    button(
+                                        class="btn btn-danger"
+                                        data-id = item.id
+                                        button-delete
+                                    ) Delete
     //- Mixin pagintion
-    +pagination(pagination)        
+    +pagination(pagination)   
+    //------------------- FORM ĐỂ CHỈNH SỬA TRẠNG THÁI--------------------------- --
     form(
         action="",
         method="POST"
         data-path=`${prefixAdmin}/products/change-status`
         id="form-change-status"
+        )
+    //------------------- FORM ĐỂ DELETE ITEM--------------------------- --
+    form(
+        action="",
+        method="POST"
+        data-path=`${prefixAdmin}/products/delete`
+        id="form-delete-item"
         ) 
-
 
 
     script(src="/admin/js/product.js")

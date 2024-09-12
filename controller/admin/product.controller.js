@@ -94,3 +94,20 @@ module.exports.changeMulti = async (req, res) => {
   res.redirect("back");
   // res.send("ok")
 };
+
+module.exports.deleteItem = async (req, res) => {
+  console.log("req.body", req.params);
+  const id = req.params.id
+  console.log("id: ",id)
+  // Xoá vĩnh viễn
+  // await Product.deleteOne({ _id: id }, { deleted: "true" });
+  // Xoá mềm
+  await Product.updateOne({ _id: id }, {
+     deleted: "true",
+     deleteAt: new Date()
+    
+    });
+  res.redirect("back");
+  // res.send("ok")
+};
+
