@@ -51,6 +51,7 @@ module.exports.index = async (req, res) => {
 
   // --------------------------End------------------------------
   const products = await Product.find(find)
+    .sort({position:"desc"})
     .limit(4)
     .skip(objectPagination.skip);
   res.render("admin/pages/products/index.pug", {
@@ -80,7 +81,7 @@ module.exports.changeMulti = async (req, res) => {
   console.log("req.body", req.body);
   const type = req.body.type;
   const ids = req.body.ids.split(", ");
-  console.log({type, ids})
+  console.log({ type, ids });
   switch (type) {
     case "active":
       await Product.updateMany({ _id: { $in: ids } }, { status: "active" });
@@ -89,7 +90,27 @@ module.exports.changeMulti = async (req, res) => {
       await Product.updateMany({ _id: { $in: ids } }, { status: "inactive" });
       break;
     case "deleteAll":
-      await Product.updateMany({ _id: { $in: ids } }, { deleted: "true" });
+      await Product.updateMany(
+        { _id: { $in: ids } },
+        { deleted: "true", deleteAt: new Date() }
+      );
+      break;
+    case "change-position":
+      console.log(ids);
+
+      // Chỗ này phải dùng for of bì forEach không hỗ trợ async/await
+      for (const element of ids) {
+        console.log(element);
+        // Phải dùng biến let thì mới gán lại được giá trị cho position
+        let [id, position] = element.split("-");
+        position = Number(position);
+        console.log(id);
+        console.log(position);
+        await Product.updateOne({ _id: id }, { position: position });
+      }
+      break;
+    // await Product.updateMany({ _id: { $in: ids } }, { deleted: "true" });
+
     default:
       break;
   }
@@ -99,17 +120,18 @@ module.exports.changeMulti = async (req, res) => {
 
 module.exports.deleteItem = async (req, res) => {
   console.log("req.body", req.params);
-  const id = req.params.id
-  console.log("id: ",id)
+  const id = req.params.id;
+  console.log("id: ", id);
   // Xoá vĩnh viễn
   // await Product.deleteOne({ _id: id }, { deleted: "true" });
   // Xoá mềm
-  await Product.updateOne({ _id: id }, {
-     deleted: "true",
-     deleteAt: new Date()
-    
-    });
+  await Product.updateOne(
+    { _id: id },
+    {
+      deleted: "true",
+      deleteAt: new Date(),
+    }
+  );
   res.redirect("back");
   // res.send("ok")
 };
-

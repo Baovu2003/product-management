@@ -119,11 +119,11 @@ if (formChangeMulti) {
     );
     console.log("inputChecked", inputChecked);
 
-    const typeChange = e.target.elements.type.value
-    console.log("typeChange",typeChange)
-    if(typeChange == "deleteAll"){
-      const isConfirm = confirm("Are you want to delete")
-      if(!isConfirm){
+    const typeChange = e.target.elements.type.value;
+    console.log("typeChange", typeChange);
+    if (typeChange == "deleteAll") {
+      const isConfirm = confirm("Are you want to delete");
+      if (!isConfirm) {
         return;
       }
     }
@@ -133,9 +133,17 @@ if (formChangeMulti) {
     if (inputChecked.length > 0) {
       inputChecked.forEach((item) => {
         const id = item.value;
-        console.log("id", id);
-        arrayId.push(id);
-        console.log("arrayId:", arrayId);
+        // console.log("id", id);
+
+        if (typeChange == "change-position") {
+          const position = item.closest("tr").querySelector("input[name=position]")          
+          const valueOfPosition = position.value;
+          console.log(`${id}-${valueOfPosition}`)
+          arrayId.push(`${id}-${valueOfPosition}`);
+        } else {
+          arrayId.push(id);
+        }
+        // console.log("arrayId:", arrayId);
         inputIds.value = arrayId.join(", ");
         formChangeMulti.submit();
       });
@@ -160,10 +168,10 @@ if (buttonDelete.length > 0) {
       if (isConfirm) {
         const id = item.getAttribute("data-id");
         console.log({ id });
-        const action =  `${path}/${id}?_method=DELETE`;
+        const action = `${path}/${id}?_method=DELETE`;
         console.log("action", action);
         formDelete.action = action;
-        // formDelete.submit();
+        formDelete.submit();
       }
     });
   });
