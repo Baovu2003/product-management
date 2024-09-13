@@ -119,6 +119,14 @@ if (formChangeMulti) {
     );
     console.log("inputChecked", inputChecked);
 
+    const typeChange = e.target.elements.type.value
+    console.log("typeChange",typeChange)
+    if(typeChange == "deleteAll"){
+      const isConfirm = confirm("Are you want to delete")
+      if(!isConfirm){
+        return;
+      }
+    }
     const arrayId = [];
     const inputIds = formChangeMulti.querySelector("input[name ='ids'] ");
     console.log("inputIds", inputIds);
@@ -128,7 +136,6 @@ if (formChangeMulti) {
         console.log("id", id);
         arrayId.push(id);
         console.log("arrayId:", arrayId);
-
         inputIds.value = arrayId.join(", ");
         formChangeMulti.submit();
       });
@@ -156,7 +163,7 @@ if (buttonDelete.length > 0) {
         const action =  `${path}/${id}?_method=DELETE`;
         console.log("action", action);
         formDelete.action = action;
-        formDelete.submit();
+        // formDelete.submit();
       }
     });
   });

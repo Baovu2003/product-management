@@ -1,7 +1,6 @@
 const express = require("express");
 
 var methodOverride = require('method-override')
-var bodyParser = require('body-parser')
 
 require('dotenv').config();
 
@@ -19,8 +18,8 @@ const port = process.env.PORT;
 
 app.use(methodOverride('_method'))
 
-// parse application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({ extended: false }))
+// express đã tích hợp sẵn cho rồi
+app.use(express.urlencoded({ extended: true }))
 
 
 app.set("views", "./views");
