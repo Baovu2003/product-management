@@ -21,52 +21,43 @@
     position: fixed;
     top: 56px;
     left: 0;
-}
-/* Style for the sidebar container */
-.sider {
-    width: 250px; /* Set width for sidebar */
-    background-color: #343a40; /* Dark background color */
-    height: 100vh; /* Full height */
-    position: fixed; /* Fixed position on the screen */
-    left: 0; /* Stick to the left side */
-    top: 0; /* Stick to the top */
-    padding-top: 20px; /* Add some padding at the top */
-    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); /* Add shadow for depth */
+    padding-top: 20px;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); 
 }
 
 .inner-menu {
-    padding: 10px; /* Add some padding to the inner menu */
+    padding: 10px;
 }
 
 .inner-menu ul {
-    list-style: none; /* Remove bullets from the list */
-    padding: 0; /* Remove default padding */
+    list-style: none; 
+    padding: 0; 
 }
 
 .inner-menu li {
-    margin-bottom: 15px; /* Add space between items */
+    margin-bottom: 15px;
     border-bottom: 1px solid;
 }
 
 .inner-menu a {
-    display: block; /* Make the entire list item clickable */
-    padding: 10px 15px; /* Add padding for space inside the link */
-    color: white; /* White text color */
-    text-decoration: none; /* Remove underline from links */
-    font-size: 16px; /* Increase font size */
-    font-weight: 500; /* Slightly bold font */
-    border-radius: 4px; /* Slightly round the edges */
-    transition: background-color 0.3s; /* Smooth background color change on hover */
+    display: block; 
+    padding: 10px 15px; 
+    color: white; 
+    text-decoration: none; 
+    font-size: 16px; 
+    font-weight: 500;
+    border-radius: 4px; 
+    transition: background-color 0.3s;
 }
 
 .inner-menu a:hover {
-    background-color: #495057; /* Darker background on hover */
+    background-color: #495057; 
 }
 
 /* Active link styling */
 .inner-menu a.active {
-    background-color: #007bff; /* Highlight the active link */
-    font-weight: bold; /* Bold text for active link */
+    background-color: #007bff; 
+    font-weight: bold; 
 }
 
 .body .main{
@@ -74,4 +65,46 @@
     position: relative;
     left: 150px;
     width: calc(100% - 180px);
+}
+.message.info [show-alert] {
+    position: fixed;
+    width: 300px;
+    top: 10px;
+    right: 15px;
+    z-index: 9999;
+    background-color: #28a745;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    
+}
+[show-alert].alert-hidden {
+   animation-name: alert-hidden;
+   animation-duration: 0.5s;
+   animation-fill-mode: both;
+}
+
+@keyframes alert-hidden {
+    from {
+        right: 15px;
+    }
+    to {
+        right: -100%;
+        display: none;
+    }
+}
+
+.message.info [show-alert] [close-alert] {
+    background: wheat;
+    display: inline-block;
+    width: 24px;
+    line-height: 24px;
+    text-align: center;
+    color: #202020;
+    border-radius: 50%;
+    cursor: pointer;
+    position: absolute;
+    top: 10px; /* Adjust this to align vertically */
+    right: 10px; /* Position it at the right corner */
 }

@@ -69,6 +69,7 @@ module.exports.changeStatus = async (req, res) => {
   const id = req.params.id;
   console.log({ status, id });
   await Product.updateOne({ _id: id }, { status: status });
+  req.flash("success","Update status successfully")
 
   // dùng back sẽ chuyển hướng yêu cầu trở lại ngay trang trước
   // Vì vậy nếu đang ở trang 2 thì nếu update status nó vẫn ở nguyên trang đó kaka
@@ -85,20 +86,23 @@ module.exports.changeMulti = async (req, res) => {
   switch (type) {
     case "active":
       await Product.updateMany({ _id: { $in: ids } }, { status: "active" });
+      req.flash("success",`Update status successfully ${ids.length} products`)
       break;
     case "inactive":
       await Product.updateMany({ _id: { $in: ids } }, { status: "inactive" });
+      req.flash("success",`Update status successfully ${ids.length} products`)
       break;
     case "deleteAll":
       await Product.updateMany(
         { _id: { $in: ids } },
         { deleted: "true", deleteAt: new Date() }
       );
+      req.flash("success",`Delete successfully ${ids.length} products`)
       break;
     case "change-position":
       console.log(ids);
 
-      // Chỗ này phải dùng for of bì forEach không hỗ trợ async/await
+      // Chỗ này phải dùng for of vì forEach không hỗ trợ async/await
       for (const element of ids) {
         console.log(element);
         // Phải dùng biến let thì mới gán lại được giá trị cho position
@@ -108,6 +112,7 @@ module.exports.changeMulti = async (req, res) => {
         console.log(position);
         await Product.updateOne({ _id: id }, { position: position });
       }
+      req.flash("success",`Change position successfully ${ids.length} products`)
       break;
     // await Product.updateMany({ _id: { $in: ids } }, { deleted: "true" });
 
@@ -118,6 +123,7 @@ module.exports.changeMulti = async (req, res) => {
   // res.send("ok")
 };
 
+// -----------------------------------[DELETE]: /admin/products/delete:id-------------------
 module.exports.deleteItem = async (req, res) => {
   console.log("req.body", req.params);
   const id = req.params.id;
@@ -132,6 +138,7 @@ module.exports.deleteItem = async (req, res) => {
       deleteAt: new Date(),
     }
   );
+  req.flash("success",`Update products successfully `)
   res.redirect("back");
   // res.send("ok")
 };

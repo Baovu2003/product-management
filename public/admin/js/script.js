@@ -176,3 +176,20 @@ if (buttonDelete.length > 0) {
     });
   });
 }
+
+// -------------------------Xử lý cho phần show alert--------------------
+const showAlert = document.querySelector("[ show-alert]");
+if(showAlert){
+  const time = Number(showAlert.getAttribute("data-time"))
+  const closeAlert = showAlert.querySelector("[close-alert]")
+
+  setTimeout(() => {
+      // showAlert.style.display="none";
+      showAlert.classList.add("alert-hidden")
+  }, time);
+  closeAlert.addEventListener('click',()=>{
+    showAlert.classList.add("alert-hidden")
+  })
+  console.log("time",time)
+  console.log("OKKKKKKK")
+}

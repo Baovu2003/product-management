@@ -3,9 +3,12 @@ include ../../mixins/filter-status.pug
 include ../../mixins/search.pug
 include ../../mixins/pagination.pug
 include ../../mixins/form-change-multi
+include ../../mixins/alert.pug
 block main
+    //- Sử dụng flash bên productController phần change status 
+    +alert-success(5000)
     h1 Trang danh sách sản phẩm
-
+      
     .card.mb-3
         .card-header Bộ lọc và tìm kiếm 
             .card-body 
