@@ -1,4 +1,5 @@
 const Product = require("../../models/product.model");
+const systemconfig = require("../../config/system")
 const filterStatusHelper = require("../../helpers/filterStatus");
 const searchHelper = require("../../helpers/search");
 
@@ -51,7 +52,7 @@ module.exports.index = async (req, res) => {
 
   // --------------------------End------------------------------
   const products = await Product.find(find)
-    .sort({position:"desc"})
+    .sort({ position: "desc" })
     .limit(4)
     .skip(objectPagination.skip);
   res.render("admin/pages/products/index.pug", {
@@ -69,7 +70,7 @@ module.exports.changeStatus = async (req, res) => {
   const id = req.params.id;
   console.log({ status, id });
   await Product.updateOne({ _id: id }, { status: status });
-  req.flash("success","Update status successfully")
+  req.flash("success", "Update status successfully");
 
   // dùng back sẽ chuyển hướng yêu cầu trở lại ngay trang trước
   // Vì vậy nếu đang ở trang 2 thì nếu update status nó vẫn ở nguyên trang đó kaka
@@ -86,18 +87,18 @@ module.exports.changeMulti = async (req, res) => {
   switch (type) {
     case "active":
       await Product.updateMany({ _id: { $in: ids } }, { status: "active" });
-      req.flash("success",`Update status successfully ${ids.length} products`)
+      req.flash("success", `Update status successfully ${ids.length} products`);
       break;
     case "inactive":
       await Product.updateMany({ _id: { $in: ids } }, { status: "inactive" });
-      req.flash("success",`Update status successfully ${ids.length} products`)
+      req.flash("success", `Update status successfully ${ids.length} products`);
       break;
     case "deleteAll":
       await Product.updateMany(
         { _id: { $in: ids } },
         { deleted: "true", deleteAt: new Date() }
       );
-      req.flash("success",`Delete successfully ${ids.length} products`)
+      req.flash("success", `Delete successfully ${ids.length} products`);
       break;
     case "change-position":
       console.log(ids);
@@ -112,7 +113,10 @@ module.exports.changeMulti = async (req, res) => {
         console.log(position);
         await Product.updateOne({ _id: id }, { position: position });
       }
-      req.flash("success",`Change position successfully ${ids.length} products`)
+      req.flash(
+        "success",
+        `Change position successfully ${ids.length} products`
+      );
       break;
     // await Product.updateMany({ _id: { $in: ids } }, { deleted: "true" });
 
@@ -125,7 +129,7 @@ module.exports.changeMulti = async (req, res) => {
 
 // -----------------------------------[DELETE]: /admin/products/delete:id-------------------
 module.exports.deleteItem = async (req, res) => {
-  console.log("req.body", req.params);
+  console.log("req.params", req.params);
   const id = req.params.id;
   console.log("id: ", id);
   // Xoá vĩnh viễn
@@ -138,7 +142,33 @@ module.exports.deleteItem = async (req, res) => {
       deleteAt: new Date(),
     }
   );
-  req.flash("success",`Update products successfully `)
+  req.flash("success", `Update products successfully `);
   res.redirect("back");
   // res.send("ok")
+};
+
+module.exports.create = async (req, res) => {
+  res.render("admin/pages/products/create.pug", {
+    pageTitle: "Thêm mới một sản phẩm",
+  });
+};
+
+module.exports.createUsePost = async (req, res) => {
+  console.log("req.body", req.body);
+  req.body.price = Number(req.body.price);
+  req.body.discountPercentage = Number(req.body.discountPercentage);
+  req.body.stock = Number(req.body.stock);
+  if (req.body.position == "") {
+    const x = await Product.countDocuments();
+    console.log(x)
+    req.body.position = x+1
+  } else {
+    req.body.position = Number(req.body.position);
+   
+  }
+  const product = new Product(req.body);
+  await product.save();
+  req.flash("success", `Create products successfully `);
+  res.redirect(`${systemconfig.prefixAdmin}/products`);
+  // res.send("Create use post");
 };

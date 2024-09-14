@@ -10,6 +10,9 @@ const session = require("express-session")
 // Vì form html chỉ hỗ trợ phương thức GET và POST.
 var methodOverride = require("method-override");
 
+// ------Multer cho phép upload file ảnh-----------
+const multer  = require('multer')
+// ----------------End----------------------------
 require("dotenv").config();
 
 const systemConfig = require("./config/system");
