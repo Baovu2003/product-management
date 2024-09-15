@@ -154,7 +154,8 @@ module.exports.create = async (req, res) => {
 };
 
 module.exports.createUsePost = async (req, res) => {
-  console.log("req.body", req.body);
+  console.log(req.file)
+  console.log("req.body:", req.body);
   req.body.price = Number(req.body.price);
   req.body.discountPercentage = Number(req.body.discountPercentage);
   req.body.stock = Number(req.body.stock);
@@ -166,6 +167,7 @@ module.exports.createUsePost = async (req, res) => {
     req.body.position = Number(req.body.position);
    
   }
+  req.body.thumbnail = `/uploads/${req.file.filename}`
   const product = new Product(req.body);
   await product.save();
   req.flash("success", `Create products successfully `);

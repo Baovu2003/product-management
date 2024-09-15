@@ -6,7 +6,8 @@ block main
     form(
         action=`${prefixAdmin}/products/create`
         id="form-create-product"
-        method="POST"
+        method="POST"      
+        enctype="multipart/form-data" 
     )
         // Title
         div(class="form-group mb-3")
@@ -75,6 +76,7 @@ block main
                 id="thumbnail"
                 name="thumbnail"
                 accept="image/*"
+               
                 required
             )
 
@@ -83,7 +85,7 @@ block main
             label(for="position") Vị trí
             input(
                 type="number"
-                class="form-control"
+                class="form-control-file"
                 id="position"
                 name="position"
                 placeholder="auto increase"
