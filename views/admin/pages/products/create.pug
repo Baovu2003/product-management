@@ -68,16 +68,21 @@ block main
             )
 
         // Thumbnail URL
-        div(class="form-group mb-3")
+        div(class="form-group mb-3" upload-image)
             label(for="thumbnail") Ảnh sản phẩm (URL)
             input(
                 type="file"
                 class="form-control"
                 id="thumbnail"
                 name="thumbnail"
-                accept="image/*"
-               
+                accept="image/*"              
                 required
+                upload-image-input
+            )
+            img(
+                src=""
+                class="upload-image-preview"
+                upload-image-preview
             )
 
         // Position

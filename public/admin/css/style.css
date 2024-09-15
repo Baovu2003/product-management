@@ -108,3 +108,14 @@
     top: 10px; /* Adjust this to align vertically */
     right: 10px; /* Position it at the right corner */
 }
+.upload-image-preview {
+    max-width: 150px;  
+    max-height: 150px;
+    border: 1px solid #ddd;  
+    padding: 5px;  
+    border-radius: 5px;  
+    margin-top: 10px;  
+  }
+  .upload-image-preview[src=""]{
+    display:none
+  }
