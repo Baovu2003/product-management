@@ -1,6 +1,7 @@
 extends ../../layouts/default.pug
-
+include ../../mixins/alert.pug
 block main
+    +alert-error(5000)
     h1 Thêm mới sản phẩm
 
     form(
@@ -28,7 +29,6 @@ block main
                 id="description"
                 name="description"
                 rows="4"
-                required
             )
 
         // Price
@@ -40,7 +40,6 @@ block main
                 id="price"
                 name="price"
                 step="0.01"
-                required
             )
 
         // Discount Percentage
@@ -53,7 +52,6 @@ block main
                 name="discountPercentage"
                 step="0.01"
                 min="0"
-                required
             )
 
         // Stock
@@ -64,7 +62,6 @@ block main
                 class="form-control"
                 id="stock"
                 name="stock"
-                required
             )
 
         // Thumbnail URL
@@ -76,7 +73,6 @@ block main
                 id="thumbnail"
                 name="thumbnail"
                 accept="image/*"              
-                required
                 upload-image-input
             )
             img(
