@@ -148,12 +148,14 @@ module.exports.deleteItem = async (req, res) => {
   // res.send("ok")
 };
 
+// -------------------------[POST]/admin/producs/create----------------
 module.exports.create = async (req, res) => {
   res.render("admin/pages/products/create.pug", {
     pageTitle: "Thêm mới một sản phẩm",
   });
 };
 
+// -------------------------[get]/admin/producs/create----------------
 module.exports.createUsePost = async (req, res) => {
   // console.log(req.file)
   // console.log("req.body:", req.body);
@@ -182,4 +184,51 @@ module.exports.createUsePost = async (req, res) => {
   req.flash("success", `Create products successfully `);
   res.redirect(`${systemconfig.prefixAdmin}/products`);
   // res.send("Create use post");
+};
+
+// -------------------------[GET]/admin/producs/edit/:id----------------
+module.exports.edit = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const find = {
+      deleted:false,
+      _id: id
+    }
+    // const product = await Product.findById(id).exec();
+    const product = await Product.findOne(find).exec();
+     console.log("productById: ", product);
+    //  res.send("ok")
+    res.render("admin/pages/products/edit.pug", {
+      pageTitle: "Update sản phẩm",
+      product: product
+    });
+  } catch (error) {
+    req.flash("success", `Create products successfully `);
+    res.redirect(`${systemconfig.prefixAdmin}/products`);
+  }
+
+};
+
+// -------------------------[PATCH]/admin/producs/edit/:id----------------
+
+module.exports.editPatch = async (req, res) => {
+  // console.log("req.body:", req.body);
+  req.body.price = Number(req.body.price);
+  req.body.discountPercentage = Number(req.body.discountPercentage);
+  req.body.stock = Number(req.body.stock);
+  req.body.position = Number(req.body.position)
+
+  if(req.file){
+     req.body.thumbnail = `/uploads/${req.file.filename}`
+  }
+ 
+  try {
+    await Product.updateOne({ _id: req.params.id }, req.body);
+    req.flash("success", `Update products successfully `);
+  } catch (error) {
+    res.redirect("back");
+  }
+
+  res.redirect(`${systemconfig.prefixAdmin}/products`);
+ 
 };

@@ -90,7 +90,11 @@ block main
 
                                 td 
                                     button.btn.btn-primary.me-2 Detail
-                                    button.btn.btn-warning.me-2 Update
+                                    a(
+                                        href=`${prefixAdmin}/products/edit/${item.id}`
+                                        class="btn btn-warning me-2 "
+                                    ) Update
+                                    
                                     button(
                                         class="btn btn-danger"
                                         data-id = item.id
