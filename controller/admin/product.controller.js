@@ -51,18 +51,47 @@ module.exports.index = async (req, res) => {
   objectPagination.totalPage = totalPage;
 
   // --------------------------End------------------------------
+
+// -----------------------Phần sort--------------------------
+  const sortOption = req.query.sort || 'position-desc'; // Default sort if none provided
+
+  let sortCriteria = {};
+  switch (sortOption) {
+      case 'position-desc':
+          sortCriteria = { position: 'desc' };
+          break;
+      case 'position-asc':
+          sortCriteria = { position: 'asc' };
+          break;
+      case 'price-desc':
+          sortCriteria = { price: 'desc' };
+          break;
+      case 'price-asc':
+          sortCriteria = { price: 'asc' };
+          break;
+      case 'title-desc':
+          sortCriteria = { title: 'desc' };
+          break;
+      case 'title-asc':
+          sortCriteria = { title: 'asc' };
+          break;
+      default:
+          sortCriteria = { position: 'desc' }; // Fallback
+  }
   const products = await Product.find(find)
-    .sort({ position: "desc" })
-    .limit(4)
-    .skip(objectPagination.skip);
-  res.render("admin/pages/products/index.pug", {
-    pageTitle: "Danh sách sản phẩm",
-    products: products,
-    filterStatus: filterStatus,
-    keyword: objectSearch.keyword,
-    pagination: objectPagination,
+  .sort(sortCriteria)
+  .limit(4)
+  .skip(objectPagination.skip);
+    res.render("admin/pages/products/index.pug", {
+      pageTitle: "Danh sách sản phẩm",
+      products: products,
+      filterStatus: filterStatus,
+      keyword: objectSearch.keyword,
+      pagination: objectPagination,
   });
+  // -----------------------END Phần sort--------------------------
 };
+
 
 // --------------------------/admin/change-status/:status/:id-------------------------------------------
 module.exports.changeStatus = async (req, res) => {
@@ -133,9 +162,11 @@ module.exports.deleteItem = async (req, res) => {
   // console.log("req.params", req.params);
   const id = req.params.id;
   // console.log("id: ", id);
-  // Xoá vĩnh viễn
+
+  // -----------Xoá vĩnh viễn------------
   // await Product.deleteOne({ _id: id }, { deleted: "true" });
-  // Xoá mềm
+
+  // ----------Xoá mềm---------------
   await Product.updateOne(
     { _id: id },
     {
@@ -231,4 +262,26 @@ module.exports.editPatch = async (req, res) => {
 
   res.redirect(`${systemconfig.prefixAdmin}/products`);
  
+};
+// --------------[GET]: /admin/producs/detail/:id-----------
+module.exports.detail = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const find = {
+      deleted:false,
+      _id: id
+    }
+    // const product = await Product.findById(id).exec();
+    const product = await Product.findOne(find).exec();
+     console.log("productById: ", product);
+    //  res.send("ok")
+    res.render("admin/pages/products/detail.pug", {
+      pageTitle: "Detail sản phẩm",
+      product: product
+    });
+  } catch (error) {
+    req.flash("success", `Create products successfully `);
+    res.redirect(`${systemconfig.prefixAdmin}/products`);
+  }
+
 };

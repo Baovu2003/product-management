@@ -46,10 +46,14 @@ html, body {
   transform: translateY(-5px);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
-
+.inner-image {
+  display: flex;
+  justify-content: center; 
+  align-items: center;    
+}
 .inner-image img {
   max-width: 100%;
-  height: auto;
+  height: 250px;
   border-bottom: 1px solid #ddd;
   margin-bottom: 1rem;
   transition: transform 0.3s ease;

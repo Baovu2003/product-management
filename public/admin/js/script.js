@@ -207,3 +207,32 @@ if(uploadImage){
     }
   })
 }
+
+// Phần sort
+
+// ---------------------Xử lý phần Sort-----------------------
+const sortSelect = document.querySelector("[ sort-select]");
+const sortClear =  document.querySelector("[sort-clear]");
+if (sortSelect) {
+  // Thiết lập giá trị của thẻ `select` từ URL khi trang được tải
+  const urlParams = new URLSearchParams(window.location.search);
+  console.log("urlParams",urlParams)
+  const sortOption = urlParams.get("sort");
+  if (sortOption) {
+    sortSelect.value = sortOption;
+  }
+  console.log("sortOption",sortOption)
+
+  // Cập nhật URL khi người dùng chọn một tùy chọn mới
+  sortSelect.addEventListener("change", () => {
+    const selectedValue = sortSelect.value;
+    const url = new URL(window.location.href);
+    url.searchParams.set("sort", selectedValue);
+    window.location.href = url.href; // Redirect đến URL mới
+  });
+
+  sortClear.addEventListener("click", () =>{
+    url.searchParams.delete("sort");
+    window.location.href = url.href; // Redirect đến URL mới
+  })
+}

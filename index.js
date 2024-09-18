@@ -31,7 +31,7 @@ app.use(methodOverride("_method"));
 // express đã tích hợp sẵn cái body-parser cho rồi
 app.use(express.urlencoded({ extended: true }));
 
-app.set("views", "./views");
+app.set("views", `${__dirname}/views`);
 app.set("view engine", "pug");
 
 //Flash
@@ -40,14 +40,27 @@ app.use(session({ cookie: { maxAge: 60000 } }));
 app.use(flash());
 // End flash
 
+/* ------New Route to the TinyMCE Node module ---------*/
+
+var path = require('path');
+app.use('/tinymce',
+   express.static(path.join(__dirname, 'node_modules', 'tinymce')));
+
+// ------------End TinyMCE --------------------
+
+
 // App Locals Variables:
 // =>>tạo ra các biến toàn cục để ở file pug nào cũng có thể sử dụng
 // Ví dụ: Đã đc thêm vào admin/partials/header.pug và  admin/partials/sider.pug
 app.locals.prefixAdmin = systemConfig.prefixAdmin;
 
-app.use(express.static("public"));
+app.use(express.static(`${__dirname}/public`));
+
+console.log("(__dirname:",__dirname);
 
 route(app);
+
+
 routeAdmin(app);
 
 app.listen(port, () => {

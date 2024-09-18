@@ -25,9 +25,24 @@ block main
     .card.mb-3
         .card-header Danh sách
             .card-body 
-                //- Mixin form-change-multi
-                .row 
-                    .col-8 
+                
+                .row(class="mb-5")
+                    .col-4
+                        .d-flex
+                            div(sort)
+                                select(
+                                    name="sort"
+                                    class="form-select"
+                                    sort-select )
+                                                option(value="position-desc") Vị trí giảm dần
+                                                option(value="position-asc") Vị trí tăng dần
+                                                option(value="price-desc") Giá giảm dần
+                                                option(value="price-asc") Giá tăng dần
+                                                option(value="title-asc") Title A-Z     
+                                                option(value="title-desc") Title z-A                      
+                            button(class="btn btn-danger" sort-clear) Sort clear
+                    //- Mixin form-change-multi
+                    .col-4
                         +form-change-multi (`${prefixAdmin}/products/change-multi?_method=PATCH`)               
                     .col-4
                        a(
@@ -89,7 +104,10 @@ block main
                                     
 
                                 td 
-                                    button.btn.btn-primary.me-2 Detail
+                                    a(
+                                        href=`${prefixAdmin}/products/detail/${item.id}`
+                                        class="btn btn-primary me-2 "
+                                    ) Detail
                                     a(
                                         href=`${prefixAdmin}/products/edit/${item.id}`
                                         class="btn btn-warning me-2 "

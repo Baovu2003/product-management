@@ -1,0 +1,64 @@
+extends ../../layouts/default.pug
+include ../../mixins/alert.pug
+block main
+    +alert-error(5000)
+    
+    // Product Detail Container
+    div.container.mt-5
+        div.row
+            // Page Title
+            div.col-md-12.text-center.mb-4
+                h1 #{pageTitle}
+
+        div.row
+            // Product Thumbnail
+            div.col-md-6
+                div.card
+                    img(src=product.thumbnail alt="Product Image" class="card-img-top img-fluid")
+                    div.card-body.text-center
+                        h5(class="card-title") Ảnh sản phẩm
+
+            // Product Information
+            div.col-md-6
+                div.card
+                    div.card-body
+                        // Title
+                        div.mb-3
+                            label.fw-bold Tiêu đề:
+                            p #{product.title}
+
+                        // Description
+                        div.mb-3
+                            label.fw-bold Mô tả:
+                            p !{product.description}
+
+                        // Price
+                        div.mb-3
+                            label.fw-bold Giá:
+                            p  #{product.price} VND
+
+                        // Discount Percentage
+                        div.mb-3
+                            label.fw-bold Phần trăm giảm giá:
+                            p  #{product.discountPercentage}%
+
+                        // Stock
+                        div.mb-3
+                            label.fw-bold Số lượng trong kho:
+                            p  #{product.stock}
+
+                        // Position
+                        div.mb-3
+                            label.fw-bold Vị trí:
+                            p  #{product.position}
+
+                        // Status
+                        div.mb-3
+                            label.fw-bold Trạng thái:
+                            p #{product.status == "active" ? "Hoạt động" : "Dừng hoạt động"}
+
+        // Back Button
+        div.row.mt-4
+            div.col-md-12.text-center
+                a(href=`${prefixAdmin}/products`) 
+                    button(class="btn btn-secondary btn-lg") Quay lại
