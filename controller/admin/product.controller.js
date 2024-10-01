@@ -2,7 +2,8 @@ const Product = require("../../models/product.model");
 const systemconfig = require("../../config/system")
 const filterStatusHelper = require("../../helpers/filterStatus");
 const searchHelper = require("../../helpers/search");
-
+const ProductCategory = require("../../models/product-category.model");
+const createTreeHelper = require("../../helpers/createTree");
 // [GET]: /admin/products
 module.exports.index = async (req, res) => {
   // console.log(req.query.status);
@@ -181,9 +182,18 @@ module.exports.deleteItem = async (req, res) => {
 
 // -------------------------[POST]/admin/producs/create----------------
 module.exports.create = async (req, res) => {
-  
+  let find = {
+    deleted: false,
+  };
+  const category = await ProductCategory.find(find);
+  console.log(category);
+
+  const newCategory= createTreeHelper.tree(category);
+  console.log(newCategory);
+
   res.render("admin/pages/products/create.pug", {
     pageTitle: "Thêm mới một sản phẩm",
+    category: newCategory
   });
 };
 
@@ -226,13 +236,25 @@ module.exports.edit = async (req, res) => {
       deleted:false,
       _id: id
     }
-    // const product = await Product.findById(id).exec();
-    const product = await Product.findOne(find).exec();
+     // const product = await Product.findById(id).exec();
+     const product = await Product.findOne(find).exec();
      console.log("productById: ", product);
+
+
+    let findProductCategory = {
+      deleted: false,
+    };
+    const category = await ProductCategory.find(findProductCategory);
+    console.log(category);
+  
+    const newCategory= createTreeHelper.tree(category);
+    console.log(newCategory);
+   
     //  res.send("ok")
     res.render("admin/pages/products/edit.pug", {
       pageTitle: "Update sản phẩm",
-      product: product
+      product: product,
+      category: newCategory
     });
   } catch (error) {
     res.redirect(`${systemconfig.prefixAdmin}/products`);
@@ -243,7 +265,7 @@ module.exports.edit = async (req, res) => {
 // -------------------------[PATCH]/admin/producs/edit/:id----------------
 
 module.exports.editPatch = async (req, res) => {
-  // console.log("req.body:", req.body);
+  console.log("req.body:", req.body);
   req.body.price = Number(req.body.price);
   req.body.discountPercentage = Number(req.body.discountPercentage);
   req.body.stock = Number(req.body.stock);
