@@ -249,6 +249,14 @@ module.exports.editPatch = async (req, res) => {
   req.body.stock = Number(req.body.stock);
   req.body.position = Number(req.body.position)
 
+  if (req.body.position == "") {
+    const x = await Product.countDocuments();
+    // console.log(x)
+    req.body.position = x+1
+  } else {
+    req.body.position = Number(req.body.position);
+   
+  }
   if(req.file){
      req.body.thumbnail = `/uploads/${req.file.filename}`
   }

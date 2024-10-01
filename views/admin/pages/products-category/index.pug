@@ -1,0 +1,42 @@
+extends ../../layouts/default.pug
+include ../../mixins/filter-status.pug
+include ../../mixins/search.pug
+include ../../mixins/pagination.pug
+include ../../mixins/form-change-multi
+include ../../mixins/alert.pug
+include ../../mixins/table-tree.pug
+
+block main
+    //- Sử dụng flash bên productController phần change status 
+    +alert-success(5000)
+    h1 Trang danh mục sản phẩm
+    .card.mb-3.mt-4
+        .card-header Danh sách
+            .card-body 
+                
+                .row(class="mb-5")
+                    .col-4
+                        
+                    .col-4
+                                      
+                    .col-4
+                        a(
+                            href=`${prefixAdmin}/products-category/create`,
+                            class="btn btn-outline-success"
+                        ) + Create category
+                table(
+                   class=" table table-striped table-bordered"
+                   checkbox-multi
+                )
+                    thead
+                        tr
+                            th 
+                                input(type="checkbox" name="checkall")
+                            th STT
+                            th Hình ảnh
+                            th Sản phẩm
+                            th Position
+                            th Trạng thái               
+                            th Hành động
+                    tbody
+                        +table-tree(records)
