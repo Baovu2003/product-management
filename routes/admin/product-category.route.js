@@ -25,4 +25,7 @@ router.post(
   validate.createPost,
   controller.editUsePost
 );
+router.get("/detail/:id", controller.detail);
+
+router.delete("/delete/:id", controller.deleteItem);
 module.exports = router;

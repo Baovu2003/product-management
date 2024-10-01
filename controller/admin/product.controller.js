@@ -181,6 +181,7 @@ module.exports.deleteItem = async (req, res) => {
 
 // -------------------------[POST]/admin/producs/create----------------
 module.exports.create = async (req, res) => {
+  
   res.render("admin/pages/products/create.pug", {
     pageTitle: "Thêm mới một sản phẩm",
   });
@@ -234,7 +235,6 @@ module.exports.edit = async (req, res) => {
       product: product
     });
   } catch (error) {
-    req.flash("success", `Create products successfully `);
     res.redirect(`${systemconfig.prefixAdmin}/products`);
   }
 
@@ -288,7 +288,6 @@ module.exports.detail = async (req, res) => {
       product: product
     });
   } catch (error) {
-    req.flash("success", `Create products successfully `);
     res.redirect(`${systemconfig.prefixAdmin}/products`);
   }
 

@@ -94,7 +94,6 @@ module.exports.edit = async (req, res) => {
       records: newRecords,
     });
   } catch (error) {
-    req.flash("success", `Create products successfully `);
     res.redirect(`${systemconfig.prefixAdmin}/products-category`);
   }
 };
@@ -122,4 +121,48 @@ module.exports.editUsePost = async (req, res) => {
   }
 
   res.redirect(`${systemconfig.prefixAdmin}/products-category`);
+};
+
+
+module.exports.detail = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const find = {
+      deleted:false,
+      _id: id
+    }
+    // const product = await Product.findById(id).exec();
+    const product = await ProductCategory.findOne(find).exec();
+     console.log("productById: ", product);
+    //  res.send("ok")
+    res.render("admin/pages/products-category/detail.pug", {
+      pageTitle: "Detail sản phẩm",
+      product: product
+    });
+  } catch (error) {
+  
+    res.redirect(`${systemconfig.prefixAdmin}/products-category`);
+  }
+
+};
+
+module.exports.deleteItem = async (req, res) => {
+  // console.log("req.params", req.params);
+  const id = req.params.id;
+  // console.log("id: ", id);
+
+  // -----------Xoá vĩnh viễn------------
+  // await Product.deleteOne({ _id: id }, { deleted: "true" });
+
+  // ----------Xoá mềm---------------
+  await ProductCategory.updateOne(
+    { _id: id },
+    {
+      deleted: "true",
+      deleteAt: new Date(),
+    }
+  );
+  req.flash("success", `Delete products-category successfully `);
+  res.redirect("back");
+  // res.send("ok")
 };

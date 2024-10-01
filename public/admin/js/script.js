@@ -179,10 +179,12 @@ if (buttonDelete.length > 0) {
 
 // -------------------------Xử lý cho phần show alert--------------------
 const showAlert = document.querySelector("[ show-alert]");
+console.log("showAlert",showAlert)
 if(showAlert){
   const time = Number(showAlert.getAttribute("data-time"))
+  console.log("time",time)
   const closeAlert = showAlert.querySelector("[close-alert]")
-
+  console.log("closeAlert",closeAlert)
   setTimeout(() => {
       // showAlert.style.display="none";
       showAlert.classList.add("alert-hidden")
